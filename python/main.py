@@ -92,6 +92,9 @@ def move_snake():
     if len(snake) != len(set(snake)):
         print("Game Over")
         exit()
+    
+    if dir == "up" or dir == "down":
+        time.sleep(0.5/10)
 
 def apple_eaten():
     global score, skip_snake_growth
@@ -137,21 +140,25 @@ def frame():
     gamewindow = init_borders()
     
     for x, y in snake:
-        gamewindow[y][x] = "#"
+        if snake[0] == (x, y):
+            gamewindow[y][x] = "@"
+        else:
+            gamewindow[y][x] = "#"
 
     for length in range(len(scoretxt)):
         gamewindow[0][length] = scoretxt[length]
     
     gamewindow[ay][ax] = "$"
     
-    time.sleep(1/10)
-    
 def main_loop():
     global score
+    os.system('cls' if os.name == 'nt' else 'clear')
     while True:
+        time.sleep(1/10)
         frame()
         check_keyboard_input()
         move_snake()
+        frame()
 
 init_snake()
 random_apple()
